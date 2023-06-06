@@ -1,57 +1,43 @@
-import { Form } from 'antd';
-import AuthLayout from './layouts/AuthLayout';
-import WrappedLoggedForm from './features/auth/forms/login';
-import Sidebar from './layouts/dashboard/Sidebar/Sidebar';
-import DashboardLayout from './layouts/dashboard/DashboardLayout';
-import styled from 'styled-components';
-import cssStyles from './utils/cssStyles';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import LoginPage from './pages/auth/login';
+import DashboardPage from './pages/dashboard';
+import ForgotPasswordPage from './pages/auth/forgot_password';
+import { useMemo } from 'react';
 
 function App() {
+  const urls = useMemo(() => {
+    return [
+      {
+        path: '/auth/login',
+        component: <LoginPage />,
+      },
+      {
+        path: '/auth/forgot',
+        component: <ForgotPasswordPage />,
+      },
+      {
+        path: '/dashboard',
+        component: <DashboardPage />,
+      },
+      {
+        path: '/',
+        component: <>Home</>,
+      },
+    ];
+  }, []);
+
   return (
-    <DashboardLayout>
-      <Container>
-        {[...Array(8)].map((card, i) => (
-          <Card>
-            <CardContent>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim ad,
-              labore veniam totam accusantium quos optio molestiae nobis minus
-              impedit sequi reiciendis tempora cumque autem veritatis? Facilis,
-              ipsa nisi? Officia.
-            </CardContent>
-          </Card>
+    <Router>
+      <Switch>
+        {urls.map((item, i) => (
+          <Route key={item.path} exact path={item.path}>
+            {item.component}
+          </Route>
         ))}
-      </Container>
-    </DashboardLayout>
-    /*  <AuthLayout title={'Sign in to Smart Pharmacy'}>
-      <Form>
-        <WrappedLoggedForm />
-      </Form>
-    </AuthLayout> */
+      </Switch>
+    </Router>
+    /*  */
   );
 }
-const Container = styled.div`
-  display: flex;
-  gap: 1.5em;
-  flex-wrap: wrap;
-`;
-
-const Card = styled.div`
-  padding: 1.5em;
-  text-align: justify;
-  border-radius: 1em;
-  font-size: 1.2rem;
-  width: 32%;
-  ${() =>
-    cssStyles.glass({
-      opacity: 0.6,
-      // bg: '#ffffff',
-      border: {
-        opacity: 0.3,
-      },
-      saturate: 30,
-    })}
-`;
-
-const CardContent = styled.div``;
 
 export default App;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-//import react pro sidebar components
+
 import {
   ProSidebar,
   Menu,
@@ -17,6 +17,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import SidebarContainer from './SidebarContainer';
 
 import { menuItems } from '../navitems';
+import { Link } from 'react-router-dom';
 
 function Sidebar({ toggleCollapse, collapse }) {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
@@ -56,7 +57,7 @@ function Sidebar({ toggleCollapse, collapse }) {
                         onClick={handleSubMenuClose}
                         icon={child.icon}
                       >
-                        {child.title}
+                        <Link to={`${child.path}`}>{child.title}</Link>
                       </MenuItem>
                     ))}
                   </SubMenu>
@@ -64,11 +65,12 @@ function Sidebar({ toggleCollapse, collapse }) {
               }
               return (
                 <MenuItem
+                  active={true}
                   key={`${item.title}-${i}`}
                   onClick={handleSubMenuClose}
                   icon={item.icon}
                 >
-                  {item.title}
+                  <Link to={`${item.path}`}>{item.title}</Link>
                 </MenuItem>
               );
             })}

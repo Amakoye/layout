@@ -1,11 +1,20 @@
-import { Form, Input, Icon, Button, Select } from 'antd';
-import styled from 'styled-components';
+import { Form, Select } from 'antd';
+import { useState } from 'react';
 import Iconify from '../../../components/Iconify';
+import { hasErrors } from '../../../utils/functions';
+import { StyledInput, StyledButton } from './components';
+import { Link } from 'react-router-dom';
 
 const LoginForm = ({ form }) => {
+  const [showPassword, setShowPassword] = useState(false);
   const { getFieldDecorator, getFieldsError, isFieldTouched, getFieldError } =
     form;
   const passwordError = isFieldTouched('password') && getFieldError('password');
+
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   return (
     <Form>
       <Form.Item>
@@ -27,20 +36,36 @@ const LoginForm = ({ form }) => {
         })(
           <StyledInput
             size='large'
-            type='password'
+            type={showPassword ? 'text' : 'password'}
             placeholder='Password'
-            suffix={<Iconify icon={'eva:eye-fill'} />}
+            suffix={
+              <Iconify
+                style={{ fontSize: '1.5rem' }}
+                onClick={toggleShowPassword}
+                icon={showPassword ? 'eva:eye-off-fill' : 'eva:eye-fill'}
+              />
+            }
           />
         )}
       </Form.Item>
-      <Form.Item
-        validateStatus={passwordError ? 'error' : ''}
-        help={passwordError || ''}
-      >
+      <Form.Item>
         {getFieldDecorator('branch', {
           rules: [{ required: true, message: 'Please select your Branch!' }],
-        })(<Select size='large' type='password' placeholder='Branch'></Select>)}
+        })(<Select size='large' placeholder='Branch'></Select>)}
       </Form.Item>
+      <div style={{ cursor: 'pointer', marginBottom: '1em' }}>
+        <Link
+          to='/auth/forgot'
+          style={{
+            marginRight: 'auto',
+            cursor: 'pointer',
+            fontFamily: 'Poppins',
+            color: '#009b85',
+          }}
+        >
+          Forgot password?
+        </Link>
+      </div>
       <Form.Item>
         <StyledButton
           type='primary'
@@ -55,42 +80,5 @@ const LoginForm = ({ form }) => {
 };
 
 const WrappedLoggedForm = Form.create({ name: 'login-form' })(LoginForm);
-
-const StyledInput = styled(Input)`
-  transition: border-color 0.3s ease-in-out;
-  background-color: transparent;
-  &:focus {
-    outline: none;
-    border: none;
-  }
-`;
-
-const StyledPasswordInput = styled(Input.Password)`
-  && {
-    background-color: transparent;
-    border-radius: 1em;
-    transition: border-color 0.3s ease-in-out;
-
-    &:focus {
-      outline: none;
-      border-color: #009b85;
-    }
-  }
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  background-color: #009b85;
-  color: white;
-  border: none;
-  font-size: 1.25rem;
-  &:hover {
-    background-color: #66c3b6;
-  }
-`;
-
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some((field) => fieldsError[field]);
-}
 
 export default WrappedLoggedForm;

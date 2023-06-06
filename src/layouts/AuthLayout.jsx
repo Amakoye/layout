@@ -14,15 +14,12 @@ const AuthLayout = ({ title, subtitle, children }) => {
 
         <RightPanel xs={24} lg={8}>
           <InnerContainer>
-            <StyledTypography.Title
-              level={4}
-              style={{ marginBottom: '1rem', fontFamily: 'Poppins' }}
-            >
+            <StyledTypography.Title level={4} style={{ fontFamily: 'Poppins' }}>
               {title}
             </StyledTypography.Title>
             {!!subtitle && (
-              <StyledTypography.Text style={{ marginBottom: '4px' }}>
-                {subtitle.text}{' '}
+              <StyledTypography.Text style={{ marginBottom: '1rem' }}>
+                {subtitle}
               </StyledTypography.Text>
             )}
 

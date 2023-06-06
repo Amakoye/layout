@@ -11,7 +11,7 @@ export const menuItems = [
   {
     title: 'Dashboard',
     icon: <AiFillDashboard />,
-    path: '/home',
+    path: '/dashboard',
   },
   {
     title: 'Reports',

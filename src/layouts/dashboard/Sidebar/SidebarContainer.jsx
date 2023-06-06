@@ -36,8 +36,7 @@ const Container = styled.div`
   }
 
   .pro-sidebar .pro-menu .pro-menu-item {
-    margin-left: 1em;
-    margin-right: 1em;
+    margin: 0.5em 1em 0.5em 1em;
     border-radius: 1em;
     color: ;
   }

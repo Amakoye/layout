@@ -5,6 +5,7 @@ export default function Image({
   disabledEffect = false,
   effect = 'blur',
   sx,
+  src,
   ...other
 }) {
   const placeholderSrc = '/assets/images/img_placeholder.svg';
@@ -65,7 +66,7 @@ export default function Image({
       >
         <img
           className='wrapper'
-          src={placeholderSrc}
+          src={src ? src : placeholderSrc}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           {...other}
           alt=''
